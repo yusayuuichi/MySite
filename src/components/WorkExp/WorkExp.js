@@ -30,19 +30,20 @@ const WorkExp = () => {
                 />
 
                 <Card.Body className="d-flex flex-column">
-                  <Card.Title>
-                    {company?.companyName} - {company?.companyAbbName}
-                  </Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
+                  <Card.Title className="d-flex align-content-start">
+                    {company?.companyName}
                     {(() => {
                       if ("Present" === company?.endDate) {
                         return (
-                          <section>
-                            <Badge bg="primary">Now</Badge>
-                          </section>
+                          <Badge bg="primary" className="ms-2">
+                            Now
+                          </Badge>
                         );
                       }
                     })()}
+                  </Card.Title>
+                  <Card.Title>{company?.companyAbbName}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
                     <section>{company?.deptName}</section>
                     <section>{company?.position}</section>
                     <section>
