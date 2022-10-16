@@ -9,12 +9,15 @@ function Notify() {
   const { notifyShow, setNotifyShow } = useContext(Context);
 
   return (
-    <ToastContainer className="p-3" position="bottom-end">
+    <ToastContainer
+      containerPosition="fixed"
+      className="p-3"
+      position="bottom-end"
+    >
       <Toast
         onClose={() => setNotifyShow(false)}
         show={notifyShow}
         delay={3000}
-        autohide
         bg="success"
       >
         <Toast.Header>

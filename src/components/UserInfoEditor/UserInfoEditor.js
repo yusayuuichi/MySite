@@ -6,21 +6,16 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
 import { Context } from "../../store/index";
+import { getBase64 } from "../../utils/utility";
 
 const UserInfoEditor = () => {
   const { userInfoEditor, updateUserInfo } = useContext(Context);
   const handleHeadShot = (event) => {
     const files = event.target.files;
     const file = files[0];
-    getBase64(file);
+    getBase64(file, onLoad);
   };
-  const getBase64 = (file) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      onLoad(reader.result);
-    };
-  };
+
   const onLoad = (fileString) => {
     updateUserInfo("figure", fileString);
   };

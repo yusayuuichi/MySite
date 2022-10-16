@@ -19,7 +19,7 @@ const Editor = () => {
       <UserInfoEditor />
       <WorkExpEditor />
       <div>技能</div>
-      <section className="w-100 d-flex justify-content-center">
+      <div className="w-100 d-flex justify-content-center">
         <Button
           variant="outline-primary"
           className="d-flex"
@@ -28,7 +28,7 @@ const Editor = () => {
         >
           儲存
         </Button>
-      </section>
+      </div>
     </>
   );
 };

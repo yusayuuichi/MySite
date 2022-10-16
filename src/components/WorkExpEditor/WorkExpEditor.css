@@ -1,5 +1,5 @@
 .card-height {
-  height: 700px !important;
+  height: 800px !important;
 }
 
 .card-image {
@@ -8,7 +8,7 @@
 
 @media screen and (max-width: 768px) {
   .card-height {
-    height: 800px !important;
+    height: 900px !important;
   }
 
   .card-image {
@@ -18,7 +18,7 @@
 
 @media screen and (max-width: 576px) {
   .card-height {
-    height: 700px !important;
+    height: 800px !important;
   }
 
   .card-image {
