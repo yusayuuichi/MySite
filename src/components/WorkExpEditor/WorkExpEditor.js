@@ -10,9 +10,9 @@ import ProjectModal from "../ProjectModal/ProjectModal";
 import { Context } from "../../store/index";
 import TextShow from "../TextShow/TextShow";
 
-import "./WorkExp.css";
+import "./WorkExpEditor.css";
 
-const WorkExp = () => {
+const WorkExpEditor = () => {
   const { companys, isLoaded } = useContext(Context);
 
   if (isLoaded) {
@@ -115,4 +115,4 @@ const WorkExp = () => {
   }
 };
 
-export default WorkExp;
+export default WorkExpEditor;

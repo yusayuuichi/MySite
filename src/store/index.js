@@ -1,5 +1,11 @@
 import { useState, useReducer, useEffect, createContext } from "react";
-import { getResumeData, getAllMsg, sendPost, login } from "../api/resume";
+import {
+  getResumeData,
+  getAllMsg,
+  sendPost,
+  login,
+  sendResume,
+} from "../api/resume";
 
 const defaultValue = {
   isLogin: false,
@@ -10,7 +16,7 @@ const defaultValue = {
     introduction: "",
     location: "",
     email: "",
-    phone: ""
+    phone: "",
   },
   userInfoEditor: {},
   companys: [],
@@ -22,9 +28,11 @@ const defaultValue = {
   poster: {
     parentId: 0,
     nickName: "",
-    comment: ""
+    comment: "",
   },
-  errMsg: ""
+  errMsg: "",
+  notifyShow: false,
+  apiWorking: false,
 };
 
 // 建立Context
@@ -49,7 +57,7 @@ const posterReducer = (state, { type, name, val }) => {
       return {
         parentId: 0,
         nickName: "",
-        comment: ""
+        comment: "",
       };
     default:
       break;
@@ -79,6 +87,8 @@ export const Provider = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(defaultValue.isLoaded);
   const [showMsgToast, setShowMsgToast] = useState(false);
   const [errMsg, setErrMsg] = useState(defaultValue.errMsg);
+  const [notifyShow, setNotifyShow] = useState(defaultValue.notifyShow);
+  const [apiWorking, setApiWorking] = useState(defaultValue.apiWorking);
 
   const [userInfoEditor, dispatchUserInfoEditor] = useReducer(
     userInfoEditorReducer,
@@ -106,6 +116,17 @@ export const Provider = ({ children }) => {
 
   const updateUserInfo = (name, val) => {
     dispatchUserInfoEditor({ type: "SETUP", name, val });
+  };
+
+  const sendSaveResume = async () => {
+    setApiWorking(true);
+    let result = await sendResume({ userInfoEditor });
+    getResumes();
+
+    if (result?.result) {
+      setNotifyShow(true);
+    }
+    setApiWorking(false);
   };
 
   const updatePoster = (name, val) => {
@@ -136,7 +157,7 @@ export const Provider = ({ children }) => {
     getAllMsg().then((data) => {
       dispatchMsgList({
         type: "SETUP",
-        payload: data?.msgList
+        payload: data?.msgList,
       });
     });
   };
@@ -149,7 +170,7 @@ export const Provider = ({ children }) => {
         dispatchUserInfoEditor({
           type: "LOAD",
           name: "userinfo",
-          val: userInfoData
+          val: userInfoData,
         });
         const companyData = data?.company;
         setCompany(companyData);
@@ -186,8 +207,13 @@ export const Provider = ({ children }) => {
         setShowMsgToast,
         loginSys,
         errMsg,
-        setErrMsg
-      }}>
+        setErrMsg,
+        sendSaveResume,
+        notifyShow,
+        setNotifyShow,
+        apiWorking,
+      }}
+    >
       {children}
     </Context.Provider>
   );
