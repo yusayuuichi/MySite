@@ -27,13 +27,16 @@ const ZhenNavbar = () => {
             <LinkContainer to="/msg">
               <Nav.Link>留言板</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/about">
-              <Nav.Link>關於</Nav.Link>
-            </LinkContainer>
+
             {isLogin ? (
-              <LinkContainer to="/resume/edit">
-                <Nav.Link>履歷維護</Nav.Link>
-              </LinkContainer>
+              <>
+                <LinkContainer to="/about">
+                  <Nav.Link>關於</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/resume/edit">
+                  <Nav.Link>履歷維護</Nav.Link>
+                </LinkContainer>
+              </>
             ) : (
               <></>
             )}

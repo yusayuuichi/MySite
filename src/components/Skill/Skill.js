@@ -20,6 +20,9 @@ const Skill = () => {
     const databaseEndSkills = skills?.filter(
       (skill) => "Database" === skill.skillType
     );
+    const learningSkills = skills?.filter(
+      (skill) => "Learning" === skill.skillType
+    );
 
     return (
       <>
@@ -47,6 +50,16 @@ const Skill = () => {
         <h4 className="skill-type">資料庫</h4>
         <section className="skill-Buttons">
           {databaseEndSkills?.map((skill) => {
+            return (
+              <Button key={skill.id} variant="outline-dark" disabled>
+                {logoMapper[skill.skillLogo]} {skill.skillName}
+              </Button>
+            );
+          })}
+        </section>
+        <h4 className="skill-type">接觸過</h4>
+        <section className="skill-Buttons">
+          {learningSkills?.map((skill) => {
             return (
               <Button key={skill.id} variant="outline-dark" disabled>
                 {logoMapper[skill.skillLogo]} {skill.skillName}
