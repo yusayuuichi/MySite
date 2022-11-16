@@ -31,6 +31,10 @@ const WorkExpEditor = () => {
     return onLoad;
   };
 
+  const handleCompanys = (event, companyId, name) => {
+    updateCompanys(name, { companyId, propVal: event.target.value });
+  };
+
   if (isLoaded) {
     return (
       <>
@@ -38,11 +42,11 @@ const WorkExpEditor = () => {
         <Row xs={1} sm={2} md={3} className="g-4">
           {companysEditor?.map((company) => (
             <Col key={company?.id} sm={4}>
-              <Card className="card-height">
+              <Card className="card-height-editor">
                 <Card.Img
                   variant="top"
                   src={company?.companyLogo}
-                  className="card-image"
+                  className="card-image-editor d-flex flex-shrink-0"
                 />
 
                 <Card.Body className="d-flex flex-column">
@@ -52,36 +56,118 @@ const WorkExpEditor = () => {
                       type="file"
                       multiple
                       size="sm"
-                      onChange={(event) =>
-                        handleCompanyLogo(event, company?.id)
-                      }
+                      onChange={(event) => handleCompanyLogo(event, company.id)}
                     />
                   </Form.Group>
 
                   <Card.Title className="d-flex align-items-center">
-                    {company?.companyName}
+                    <Form.Group className="mb-1 w-100" controlId="companyName">
+                      <Form.Control
+                        type="text"
+                        placeholder="公司名"
+                        size="sm"
+                        onChange={(event) =>
+                          handleCompanys(event, company.id, "companyName")
+                        }
+                        defaultValue={company?.companyName}
+                      />
+                    </Form.Group>
                     {(() => {
                       if ("Present" === company?.endDate) {
                         return (
-                          <Badge bg="primary" className="ms-2">
+                          <Badge
+                            bg="primary"
+                            className="ms-2 align-self-center"
+                          >
                             Now
                           </Badge>
                         );
                       }
                     })()}
                   </Card.Title>
-                  <Card.Title>{company?.companyAbbName}</Card.Title>
+                  <Card.Title>
+                    <Form.Group
+                      className="mb-1 w-100"
+                      controlId="companyAbbName"
+                    >
+                      <Form.Control
+                        type="text"
+                        placeholder="公司英文名"
+                        size="sm"
+                        onChange={(event) =>
+                          handleCompanys(event, company.id, "companyAbbName")
+                        }
+                        defaultValue={company?.companyAbbName}
+                      />
+                    </Form.Group>
+                  </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    <section>{company?.deptName}</section>
-                    <section>{company?.position}</section>
                     <section>
-                      {company?.beginDate?.substring(0, 7)} ~{" "}
-                      {company?.endDate?.substring(0, 7)}
+                      <Form.Group className="mb-1" controlId="deptName">
+                        <Form.Control
+                          type="text"
+                          placeholder="部門"
+                          size="sm"
+                          onChange={(event) =>
+                            handleCompanys(event, company.id, "deptName")
+                          }
+                          defaultValue={company?.deptName}
+                        />
+                      </Form.Group>
+                    </section>
+                    <section>
+                      <Form.Group className="mb-1" controlId="position">
+                        <Form.Control
+                          type="text"
+                          placeholder="職稱"
+                          size="sm"
+                          onChange={(event) =>
+                            handleCompanys(event, company.id, "position")
+                          }
+                          defaultValue={company?.position}
+                        />
+                      </Form.Group>
+                    </section>
+                    <section className="d-flex align-items-center">
+                      <Form.Group className="mb-1" controlId="beginDate">
+                        <Form.Control
+                          type="text"
+                          placeholder="起始日"
+                          size="sm"
+                          onChange={(event) =>
+                            handleCompanys(event, company.id, "beginDate")
+                          }
+                          defaultValue={company?.beginDate?.substring(0, 7)}
+                        />
+                      </Form.Group>
+                      ~{" "}
+                      <Form.Group className="mb-1" controlId="endDate">
+                        <Form.Control
+                          type="text"
+                          placeholder="結束日"
+                          size="sm"
+                          onChange={(event) =>
+                            handleCompanys(event, company.id, "endDate")
+                          }
+                          defaultValue={company?.endDate?.substring(0, 7)}
+                        />
+                      </Form.Group>
                     </section>
                   </Card.Subtitle>
 
                   <Card.Text className="flex-grow-1">
-                    <TextShow text={company?.jobSummary} />
+                    <Form.Group className="mb-1" controlId="jobSummary">
+                      <Form.Control
+                        type="text"
+                        as="textarea"
+                        rows={7}
+                        placeholder="工作概要"
+                        onChange={(event) =>
+                          handleCompanys(event, company.id, "jobSummary")
+                        }
+                        defaultValue={company?.jobSummary}
+                      />
+                    </Form.Group>
                   </Card.Text>
 
                   <ProjectModal company={company} />

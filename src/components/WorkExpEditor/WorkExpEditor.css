@@ -1,27 +1,27 @@
-.card-height {
-  height: 800px !important;
+.card-height-editor {
+  height: 850px !important;
 }
 
-.card-image {
-  height: 350px !important;
+.card-image-editor {
+  height: 300px !important;
 }
 
 @media screen and (max-width: 768px) {
-  .card-height {
-    height: 900px !important;
+  .card-height-editor {
+    height: 780px !important;
   }
 
-  .card-image {
-    height: 250px !important;
+  .card-image-editor {
+    height: 200px !important;
   }
 }
 
 @media screen and (max-width: 576px) {
-  .card-height {
-    height: 800px !important;
+  .card-height-editor {
+    height: 850px !important;
   }
 
-  .card-image {
-    height: 350px !important;
+  .card-image-editor {
+    height: 300px !important;
   }
 }
