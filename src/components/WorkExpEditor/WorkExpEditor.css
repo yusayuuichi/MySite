@@ -1,0 +1,27 @@
+.card-height-editor {
+  height: 850px !important;
+}
+
+.card-image-editor {
+  height: 300px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .card-height-editor {
+    height: 780px !important;
+  }
+
+  .card-image-editor {
+    height: 200px !important;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .card-height-editor {
+    height: 850px !important;
+  }
+
+  .card-image-editor {
+    height: 300px !important;
+  }
+}

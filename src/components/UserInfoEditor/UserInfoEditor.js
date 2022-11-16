@@ -6,27 +6,22 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
 import { Context } from "../../store/index";
+import { getBase64 } from "../../utils/utility";
 
 const UserInfoEditor = () => {
   const { userInfoEditor, updateUserInfo } = useContext(Context);
   const handleHeadShot = (event) => {
     const files = event.target.files;
     const file = files[0];
-    getBase64(file);
+    getBase64(file, onLoad);
   };
-  const getBase64 = (file) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      onLoad(reader.result);
-    };
-  };
+
   const onLoad = (fileString) => {
     updateUserInfo("figure", fileString);
   };
 
-  const handleUserInfo = (event) => {
-    console.log("It's OK");
+  const handleUserInfo = (name, event) => {
+    updateUserInfo(name, event.target.value);
   };
 
   return (
@@ -55,7 +50,7 @@ const UserInfoEditor = () => {
                   type="text"
                   placeholder="現職:"
                   size="sm"
-                  onChange={(event) => handleUserInfo(event)}
+                  onChange={(event) => handleUserInfo("workNow", event)}
                   defaultValue={userInfoEditor?.workNow}
                 />
               </Form.Group>
@@ -68,7 +63,7 @@ const UserInfoEditor = () => {
               type="text"
               placeholder="中文名"
               size="lg"
-              onChange={(event) => handleUserInfo(event)}
+              onChange={(event) => handleUserInfo("name", event)}
               defaultValue={userInfoEditor?.name}
             />
           </Form.Group>
@@ -77,7 +72,7 @@ const UserInfoEditor = () => {
               type="text"
               placeholder="英文名"
               size="lg"
-              onChange={(event) => handleUserInfo(event)}
+              onChange={(event) => handleUserInfo("engName", event)}
               defaultValue={userInfoEditor?.engName}
             />
           </Form.Group>
@@ -86,7 +81,7 @@ const UserInfoEditor = () => {
               type="text"
               placeholder="職稱"
               size="lg"
-              onChange={(event) => handleUserInfo(event)}
+              onChange={(event) => handleUserInfo("jobTitle", event)}
               defaultValue={userInfoEditor?.jobTitle}
             />
           </Form.Group>
@@ -96,7 +91,7 @@ const UserInfoEditor = () => {
                 type="text"
                 placeholder="畢業學校&年份"
                 size="sm"
-                onChange={(event) => handleUserInfo(event)}
+                onChange={(event) => handleUserInfo("school", event)}
                 defaultValue={userInfoEditor?.school}
               />
             </Form.Group>
@@ -107,7 +102,7 @@ const UserInfoEditor = () => {
                 as="textarea"
                 rows={7}
                 placeholder="簡介"
-                onChange={(event) => handleUserInfo(event)}
+                onChange={(event) => handleUserInfo("introduction", event)}
                 defaultValue={userInfoEditor?.introduction}
               />
             </Form.Group>
@@ -121,7 +116,7 @@ const UserInfoEditor = () => {
               type="text"
               placeholder="地點"
               size="sm"
-              onChange={(event) => handleUserInfo(event)}
+              onChange={(event) => handleUserInfo("location", event)}
               defaultValue={userInfoEditor?.location}
             />
           </Form.Group>
@@ -132,7 +127,7 @@ const UserInfoEditor = () => {
               type="text"
               placeholder="電話"
               size="sm"
-              onChange={(event) => handleUserInfo(event)}
+              onChange={(event) => handleUserInfo("phone", event)}
               defaultValue={userInfoEditor?.phone}
             />
           </Form.Group>
@@ -143,7 +138,7 @@ const UserInfoEditor = () => {
               type="text"
               placeholder="電子郵件"
               size="sm"
-              onChange={(event) => handleUserInfo(event)}
+              onChange={(event) => handleUserInfo("email", event)}
               defaultValue={userInfoEditor?.email}
             />
           </Form.Group>
@@ -156,7 +151,7 @@ const UserInfoEditor = () => {
               type="text"
               placeholder="Linkedin"
               size="sm"
-              onChange={(event) => handleUserInfo(event)}
+              onChange={(event) => handleUserInfo("linkedin", event)}
               defaultValue={userInfoEditor?.linkedin}
             />
           </Form.Group>
@@ -167,7 +162,7 @@ const UserInfoEditor = () => {
               type="text"
               placeholder="Cakeresume"
               size="sm"
-              onChange={(event) => handleUserInfo(event)}
+              onChange={(event) => handleUserInfo("cakeresume", event)}
               defaultValue={userInfoEditor?.cakeresume}
             />
           </Form.Group>

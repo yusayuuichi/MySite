@@ -10,6 +10,8 @@ import ProjectModal from "../ProjectModal/ProjectModal";
 import { Context } from "../../store/index";
 import TextShow from "../TextShow/TextShow";
 
+import "./WorkExp.css";
+
 const WorkExp = () => {
   const { companys, isLoaded } = useContext(Context);
 
@@ -17,26 +19,31 @@ const WorkExp = () => {
     return (
       <>
         <h1 className="mt-5">工作經歷</h1>
-        <Row>
+        <Row xs={1} sm={2} md={3} className="g-4">
           {companys?.map((company) => (
             <Col key={company?.id} sm={4}>
-              <Card>
-                <Card.Img variant="top" src={company?.companyLogo} />
+              <Card className="card-height">
+                <Card.Img
+                  variant="top"
+                  src={company?.companyLogo}
+                  className="card-image"
+                />
 
-                <Card.Body>
-                  <Card.Title>
-                    {company?.companyName} - {company?.companyAbbName}
-                  </Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
+                <Card.Body className="d-flex flex-column">
+                  <Card.Title className="d-flex align-items-center">
+                    {company?.companyName}
                     {(() => {
                       if ("Present" === company?.endDate) {
                         return (
-                          <section>
-                            <Badge bg="primary">Now</Badge>
-                          </section>
+                          <Badge bg="primary" className="ms-2">
+                            Now
+                          </Badge>
                         );
                       }
                     })()}
+                  </Card.Title>
+                  <Card.Title>{company?.companyAbbName}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
                     <section>{company?.deptName}</section>
                     <section>{company?.position}</section>
                     <section>
@@ -45,7 +52,7 @@ const WorkExp = () => {
                     </section>
                   </Card.Subtitle>
 
-                  <Card.Text>
+                  <Card.Text className="flex-grow-1">
                     <TextShow text={company?.jobSummary} />
                   </Card.Text>
 

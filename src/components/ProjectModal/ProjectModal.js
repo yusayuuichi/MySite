@@ -16,7 +16,8 @@ function MyVerticallyCenteredModal(props) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      scrollable="true">
+      scrollable="true"
+    >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
           <section>{company.companyName}</section>
@@ -59,7 +60,8 @@ function App(props) {
       <Button
         data-testid="ModalBtn"
         variant="outline-primary"
-        onClick={() => clickModal(true)}>
+        onClick={() => clickModal(true)}
+      >
         專案內容
       </Button>
 

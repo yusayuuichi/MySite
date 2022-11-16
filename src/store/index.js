@@ -1,5 +1,11 @@
 import { useState, useReducer, useEffect, createContext } from "react";
-import { getResumeData, getAllMsg, sendPost, login } from "../api/resume";
+import {
+  getResumeData,
+  getAllMsg,
+  sendPost,
+  login,
+  sendResume,
+} from "../api/resume";
 
 const defaultValue = {
   isLogin: false,
@@ -10,11 +16,13 @@ const defaultValue = {
     introduction: "",
     location: "",
     email: "",
-    phone: ""
+    phone: "",
   },
   userInfoEditor: {},
+  companysEditor: [],
+  projectsEditor: [],
+  skillsEditor: [],
   companys: [],
-  projects: [],
   skills: [],
   isLoaded: false,
   addPost: () => {},
@@ -22,9 +30,11 @@ const defaultValue = {
   poster: {
     parentId: 0,
     nickName: "",
-    comment: ""
+    comment: "",
   },
-  errMsg: ""
+  errMsg: "",
+  notifyShow: false,
+  apiWorking: false,
 };
 
 // 建立Context
@@ -49,7 +59,7 @@ const posterReducer = (state, { type, name, val }) => {
       return {
         parentId: 0,
         nickName: "",
-        comment: ""
+        comment: "",
       };
     default:
       break;
@@ -69,20 +79,57 @@ const userInfoEditorReducer = (state, { type, name, val }) => {
   }
 };
 
+const companysEditorReducer = (state, { type, name, val }) => {
+  switch (type) {
+    case "LOAD":
+      return val;
+    case "SETUP":
+      const { companyId, propVal } = val;
+      const index = state.findIndex((obj) => obj.id === companyId);
+      let company = state.filter((obj) => obj.id === companyId)[0];
+      company = { ...company, [name]: propVal };
+      const companys = [...state];
+      companys.splice(index, 1, company);
+      return companys;
+    case "CLEAN":
+      return {};
+    default:
+      break;
+  }
+};
+
+const projectsEditorReducer = (state, { type, name, val }) => {
+  switch (type) {
+    case "LOAD":
+      return val;
+    case "SETUP":
+      return { ...state, [name]: val };
+    case "CLEAN":
+      return {};
+    default:
+      break;
+  }
+};
+
 // 建立 Context Provider
 export const Provider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(defaultValue.isLogin);
   const [userInfo, setUserInfo] = useState(defaultValue.userInfo);
   const [companys, setCompany] = useState(defaultValue.companys);
-  const [projects, setProject] = useState(defaultValue.projects);
   const [skills, setSkill] = useState(defaultValue.skills);
   const [isLoaded, setIsLoaded] = useState(defaultValue.isLoaded);
   const [showMsgToast, setShowMsgToast] = useState(false);
   const [errMsg, setErrMsg] = useState(defaultValue.errMsg);
+  const [notifyShow, setNotifyShow] = useState(defaultValue.notifyShow);
+  const [apiWorking, setApiWorking] = useState(defaultValue.apiWorking);
 
   const [userInfoEditor, dispatchUserInfoEditor] = useReducer(
     userInfoEditorReducer,
     defaultValue.userInfoEditor
+  );
+  const [companysEditor, dispatchCompanysEditor] = useReducer(
+    companysEditorReducer,
+    defaultValue.companysEditor
   );
   const [poster, dispatchPoster] = useReducer(
     posterReducer,
@@ -93,6 +140,33 @@ export const Provider = ({ children }) => {
     defaultValue.msgList
   );
 
+  // 進入系統時自動呼叫
+  const getResumes = () => {
+    getResumeData().then((data) => {
+      if (data !== null) {
+        const userInfoData = data?.info;
+        setUserInfo(userInfoData);
+        dispatchUserInfoEditor({
+          type: "LOAD",
+          name: "userinfo",
+          val: userInfoData,
+        });
+        const companyData = data?.company;
+        setCompany(companyData);
+        dispatchCompanysEditor({
+          type: "LOAD",
+          name: "companys",
+          val: companyData,
+        });
+        const skillData = data?.skill;
+        setSkill(skillData);
+        setIsLoaded(true);
+      }
+    });
+  };
+  useEffect(getResumes, []);
+
+  // 登入履歷維護
   const loginSys = async (username, password) => {
     const data = { username, password };
     const result = await login(data);
@@ -104,8 +178,34 @@ export const Provider = ({ children }) => {
     }
   };
 
+  // 履歷維護
   const updateUserInfo = (name, val) => {
     dispatchUserInfoEditor({ type: "SETUP", name, val });
+  };
+
+  const updateCompanys = (name, val) => {
+    dispatchCompanysEditor({ type: "SETUP", name, val });
+  };
+
+  const sendSaveResume = async () => {
+    setApiWorking(true);
+    let result = await sendResume({ userInfoEditor });
+    getResumes();
+
+    if (result?.result) {
+      setNotifyShow(true);
+    }
+    setApiWorking(false);
+  };
+
+  // 留言板
+  const getMsgList = () => {
+    getAllMsg().then((data) => {
+      dispatchMsgList({
+        type: "SETUP",
+        payload: data?.msgList,
+      });
+    });
   };
 
   const updatePoster = (name, val) => {
@@ -128,40 +228,9 @@ export const Provider = ({ children }) => {
 
   const sendPoster = async () => {
     await sendPost(poster);
-    await getMsgList();
-    await dispatchPoster({ type: "CLEAN" });
+    getMsgList();
+    dispatchPoster({ type: "CLEAN" });
   };
-
-  const getMsgList = () => {
-    getAllMsg().then((data) => {
-      dispatchMsgList({
-        type: "SETUP",
-        payload: data?.msgList
-      });
-    });
-  };
-
-  const getResumes = () => {
-    getResumeData().then((data) => {
-      if (data !== null) {
-        const userInfoData = data?.info;
-        setUserInfo(userInfoData);
-        dispatchUserInfoEditor({
-          type: "LOAD",
-          name: "userinfo",
-          val: userInfoData
-        });
-        const companyData = data?.company;
-        setCompany(companyData);
-        const projectData = data?.project;
-        setProject(projectData);
-        const skillData = data?.skill;
-        setSkill(skillData);
-        setIsLoaded(true);
-      }
-    });
-  };
-  useEffect(getResumes, []);
 
   return (
     <Context.Provider
@@ -171,8 +240,9 @@ export const Provider = ({ children }) => {
         userInfo,
         userInfoEditor,
         updateUserInfo,
+        updateCompanys,
         companys,
-        projects,
+        companysEditor,
         skills,
         isLoaded,
         msgList,
@@ -186,8 +256,13 @@ export const Provider = ({ children }) => {
         setShowMsgToast,
         loginSys,
         errMsg,
-        setErrMsg
-      }}>
+        setErrMsg,
+        sendSaveResume,
+        notifyShow,
+        setNotifyShow,
+        apiWorking,
+      }}
+    >
       {children}
     </Context.Provider>
   );

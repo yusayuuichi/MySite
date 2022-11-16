@@ -27,9 +27,9 @@ export const sendPost = async (data) => {
     await fetch("https://8twqqo-8080.preview.csb.app/msg/add", {
       method: "POST", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
   } catch {
     return null;
@@ -41,10 +41,28 @@ export const login = async (data) => {
     const result = await fetch("https://8twqqo-8080.preview.csb.app/login", {
       method: "POST", // or 'PUT'
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     }).then((response) => response.json());
+    return result;
+  } catch {
+    return null;
+  }
+};
+
+export const sendResume = async (data) => {
+  try {
+    const result = await fetch(
+      "https://8twqqo-8080.preview.csb.app/resume/update",
+      {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    ).then((response) => response.json());
     return result;
   } catch {
     return null;
