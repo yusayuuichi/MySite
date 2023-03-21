@@ -57,7 +57,7 @@ const Skill = () => {
             );
           })}
         </section>
-        <h4 className="skill-type">接觸過</h4>
+        <h4 className="skill-type">接觸、學習過</h4>
         <section className="skill-Buttons">
           {learningSkills?.map((skill) => {
             return (
