@@ -78,3 +78,5 @@ yarn add prettier
     "bracketSpacing": true
 }
 ```
+
+此版本暫時不安裝slint 與 prettier
