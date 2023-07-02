@@ -1,25 +1,25 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 const TextShow = ({ text }) => {
-  const textArr = text?.split("\n");
-  return (
-    <>
-      {textArr?.map((text, index) => {
-        return (
-          <span key={index}>
-            {"\r" === text ? <br /> : text.trim()}
-            <br />
-          </span>
-        );
-      })}
-    </>
-  );
+	const textArr = text?.split('\n');
+	return (
+		<>
+			{textArr?.map((text, index) => {
+				return (
+					<span key={index}>
+						{'\r' === text ? <br /> : text.trim()}
+						<br />
+					</span>
+				);
+			})}
+		</>
+	);
 };
 
-Text.propTypes = {
-  text: PropTypes.string
+TextShow.propTypes = {
+	text: PropTypes.string,
 };
-Text.defaultProps = {
-  text: ""
+TextShow.defaultProps = {
+	text: '',
 };
 export default TextShow;
