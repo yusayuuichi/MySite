@@ -62,3 +62,4 @@ npm init @eslint/config
 ```
 
 # 安裝 eslint & Prettier
+eslint & prettier 的 vscode插件
