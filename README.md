@@ -61,22 +61,5 @@ npm init @eslint/config
   pnpm
 ```
 
-# 安裝 Prettier
-```
-yarn add prettier
-```
-
-建立 .prettierrc
-```
-{
-    "semi": true,
-    "tabWidth": 2,
-    "printWidth": 100,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "jsxSingleQuote": true,
-    "bracketSpacing": true
-}
-```
-
-此版本暫時不安裝slint 與 prettier
+# 安裝 eslint & Prettier
+eslint & prettier 的 vscode插件
