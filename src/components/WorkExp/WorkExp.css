@@ -1,27 +1,27 @@
 .card-height {
-  height: 700px !important;
+	height: 700px !important;
 }
 
 .card-image {
-  height: 350px !important;
+	height: 350px !important;
 }
 
 @media screen and (max-width: 768px) {
-  .card-height {
-    height: 800px !important;
-  }
+	.card-height {
+		height: 800px !important;
+	}
 
-  .card-image {
-    height: 250px !important;
-  }
+	.card-image {
+		height: 250px !important;
+	}
 }
 
 @media screen and (max-width: 576px) {
-  .card-height {
-    height: 700px !important;
-  }
+	.card-height {
+		height: 700px !important;
+	}
 
-  .card-image {
-    height: 350px !important;
-  }
+	.card-image {
+		height: 350px !important;
+	}
 }
