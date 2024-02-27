@@ -1,6 +1,9 @@
+// const apiUrl = 'https://zsg4pv-8080.preview.csb.app/';
+const apiUrl = 'http://localhost:8080/';
+
 export const getResumeData = async () => {
 	try {
-		const data = await fetch('https://8twqqo-8080.preview.csb.app/resume/me') // 向 requestURL 發送請求
+		const data = await fetch(`${apiUrl}resume/me`) // 向 requestURL 發送請求
 			.then((response) => response.json()); // 取得伺服器回傳的資料並以 JSON 解析
 		return data;
 	} catch {
@@ -13,9 +16,8 @@ export const getResumeData = async () => {
 
 export const getAllMsg = async () => {
 	try {
-		const data = await fetch('https://8twqqo-8080.preview.csb.app/msg/all').then((response) =>
-			response.json(),
-		);
+		const data = await fetch(`${apiUrl}msg/all`) //取得所有訊息
+			.then((response) => response.json());
 		return data;
 	} catch {
 		return null;
@@ -24,7 +26,7 @@ export const getAllMsg = async () => {
 
 export const sendPost = async (data) => {
 	try {
-		await fetch('https://8twqqo-8080.preview.csb.app/msg/add', {
+		await fetch(`${apiUrl}msg/add`, {
 			method: 'POST', // or 'PUT'
 			headers: {
 				'Content-Type': 'application/json',
@@ -38,7 +40,7 @@ export const sendPost = async (data) => {
 
 export const login = async (data) => {
 	try {
-		const result = await fetch('https://8twqqo-8080.preview.csb.app/login', {
+		const result = await fetch(`${apiUrl}login`, {
 			method: 'POST', // or 'PUT'
 			headers: {
 				'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ export const login = async (data) => {
 
 export const sendResume = async (data) => {
 	try {
-		const result = await fetch('https://8twqqo-8080.preview.csb.app/resume/update', {
+		const result = await fetch(`${apiUrl}resume/update`, {
 			method: 'POST', // or 'PUT'
 			headers: {
 				'Content-Type': 'application/json',
